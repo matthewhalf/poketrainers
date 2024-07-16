@@ -7,12 +7,56 @@ const SearchPokemon = () => {
   const [pokemonList, setPokemonList] = useState([]);
   const [filteredPokemon, setFilteredPokemon] = useState([]);
 
+  const getTypeClass = (type) => {
+    switch (type) {
+      case 'normal':
+        return 'type-normal';
+      case 'fire':
+        return 'type-fire';
+      case 'water':
+        return 'type-water';
+      case 'grass':
+        return 'type-grass';
+      case 'electric':
+        return 'type-electric';
+      case 'bug':
+          return 'type-bug';
+      case 'poison':
+          return 'type-poison';
+      case 'ground':
+          return 'type-ground';
+      case 'psychic':
+            return 'type-psychic';
+      case 'fairy':
+            return 'type-psychic';
+      case 'fighting':
+            return 'type-fighting';
+      case 'rock':
+            return 'type-ground';
+      case 'ghost':
+            return 'type-poison';     
+      default:
+        return 'type-default';
+    }
+  };
+
   useEffect(() => {
     // Carica la lista dei Pokémon al caricamento della pagina
     axios.get('https://pokeapi.co/api/v2/pokemon?limit=540')
       .then(response => {
-        setPokemonList(response.data.results);
-        setFilteredPokemon(response.data.results); // Mostra tutti i Pokémon all'avvio
+        const results = response.data.results;
+        const pokemonDetailsPromises = results.map(pokemon =>
+          axios.get(pokemon.url).then(res => res.data)
+        );
+
+        Promise.all(pokemonDetailsPromises)
+          .then(pokemonDetails => {
+            setPokemonList(pokemonDetails);
+            setFilteredPokemon(pokemonDetails); // Mostra tutti i Pokémon all'avvio
+          })
+          .catch(error => {
+            console.error("There was an error fetching the Pokémon details!", error);
+          });
       })
       .catch(error => {
         console.error("There was an error fetching the Pokémon list!", error);
@@ -44,12 +88,16 @@ const SearchPokemon = () => {
       <div className='grid grid-cols-2 gap-4 justify-center items-center mt-6 max-h-[60vh] overflow-y-auto'>
         {filteredPokemon.length > 0 ? (
           filteredPokemon.map((pokemon, index) => (
-            <div key={index} className='text-center bg-[#5CB387] rounded-lg mt-4'>
-              <Link href={`/pokemon/${pokemon.url.split('/')[pokemon.url.split('/').length - 2]}`}>
+            <div
+              key={index}
+              className={`text-center ${getTypeClass(pokemon.types[0].type.name)} rounded-lg mt-4`}
+            >
+              <Link href={`/pokemon/${pokemon.id}`}>
                 <div className='flex flex-col items-center justify-center pb-4'>
                   <img
-                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split('/')[pokemon.url.split('/').length - 2]}.png`}
-                    alt={pokemon.name} width={100}
+                    src={pokemon.sprites.front_default}
+                    alt={pokemon.name}
+                    width={100}
                   />
                   <p className='text-white font-semibold'>{pokemon.name}</p>
                 </div>
@@ -58,7 +106,7 @@ const SearchPokemon = () => {
           ))
         ) : (
           // Mostra un messaggio se non ci sono risultati
-            <p className='text-center text-gray-500 mt-4 absolute left-[12vw]'>Nessun Pokémon trovato.</p>
+          <p className='text-center text-gray-500 mt-4 absolute left-[12vw]'>Nessun Pokémon trovato.</p>
         )}
       </div>
     </div>

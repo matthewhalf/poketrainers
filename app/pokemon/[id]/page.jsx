@@ -2,12 +2,47 @@
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import BottomNavbar from '@/components/BottomNavbar';
+import Header from '@/components/Header';
 
 const Pokemon = ({ params }) => {
   const { id } = params;
   const [pokemon, setPokemon] = useState(null);
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [movesInItalian, setMovesInItalian] = useState([]);
+
+  const getTypeClass = (type) => {
+    switch (type) {
+      case 'normal':
+        return 'type-normal';
+      case 'fire':
+        return 'type-fire';
+      case 'water':
+        return 'type-water';
+      case 'grass':
+        return 'type-grass';
+      case 'electric':
+        return 'type-electric';
+      case 'bug':
+          return 'type-bug';
+      case 'poison':
+          return 'type-poison';
+      case 'ground':
+          return 'type-ground';
+      case 'psychic':
+            return 'type-psychic';
+      case 'fairy':
+            return 'type-psychic';
+      case 'fighting':
+            return 'type-fighting';
+      case 'rock':
+            return 'type-ground';
+      case 'ghost':
+            return 'type-poison';     
+      default:
+        return 'type-default';
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -94,9 +129,15 @@ const Pokemon = ({ params }) => {
 
   return (
     <div>
-      <div className='bg-blue-800 p-10 w-fit'>
-        <h1>{pokemon.name}</h1>
-        <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+      <Header />
+      <div className='min-h-[65vh] flex flex-col justify-center items-center'>
+        <div className={`text-center ${getTypeClass(pokemon.types[0].type.name)} rounded-b-[50px] pt-[8em] pb-2 w-full flex flex-col justify-center items-center`}>
+          <h1 className='text-3xl font-extrabold text-white'>{pokemon.name}</h1>
+          <img src={pokemon.sprites.front_default} alt={pokemon.name} width={100}/>  
+        </div>
+
+
+       
         <p>Height: {pokemon.height / 10} m</p>
         <p>Weight: {pokemon.weight / 10} kg</p>
         <p>Type: {pokemon.types.map(typeInfo => typeInfo.type.name).join(', ')}</p>
@@ -151,6 +192,7 @@ const Pokemon = ({ params }) => {
           ))}
         </ul>
       </div>
+      <BottomNavbar />
     </div>
   );
 };

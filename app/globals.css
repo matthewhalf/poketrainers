@@ -1,3 +1,60 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.type-normal {
+    background-color: #A8A878;
+    color: white;
+  }
+  
+  .type-fire {
+    background-color: #F08030;
+    color: white;
+  }
+  
+  .type-water {
+    background-color: #6890F0;
+    color: white;
+  }
+
+  .type-grass {
+    background-color: #5CB387;
+    color: white;
+  }
+
+  .type-electric {
+    background-color: #e9d33d;
+    color: white;
+  }
+
+  .type-bug {
+    background-color: #1e5d32;
+    color: white;
+  }
+
+  .type-poison {
+    background-color: #7e2a6c;
+    color: white;
+  }
+
+  .type-ground {
+    background-color: #804000;
+    color: white;
+  }
+  
+  .type-psychic {
+    background-color: #c704b9;
+    color: white;
+  }
+
+  .type-fighting {
+    background-color: #ef3c07;
+    color: white;
+  }
+
+  .type-default {
+    background-color: #66659d;
+    color: white;
+  }
+  /* Aggiungi altre classi CSS per gli altri tipi di Pokémon secondo necessità */
+  
