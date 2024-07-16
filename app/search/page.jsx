@@ -55,6 +55,15 @@ const Search = () => {
           </li>
         ))}
       </ul>
+      <ul>
+        {pokemonList.map((pokemon, index) => (
+          <li key={index}>
+            <Link href={`/pokemon/${index + 1}`}>
+              {pokemon.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
