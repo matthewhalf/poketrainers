@@ -29,13 +29,11 @@ const SearchPokemon = () => {
       case 'psychic':
         return 'type-psychic';
       case 'fairy':
-        return 'type-fairy';
+        return 'type-psychic';
       case 'fighting':
         return 'type-fighting';
       case 'rock':
-        return 'type-rock';
-      case 'ghost':
-        return 'type-ghost';
+        return 'type-ground';
       default:
         return 'type-default';
     }

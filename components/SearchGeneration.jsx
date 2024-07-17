@@ -16,33 +16,31 @@ const SearchGeneration = () => {
   const getTypeClass = (type) => {
     switch (type) {
       case 'normal':
-        return 'type-normal badge-normal';
+        return 'type-normal';
       case 'fire':
-        return 'type-fire badge-fire';
+        return 'type-fire';
       case 'water':
-        return 'type-water badge-water';
+        return 'type-water';
       case 'grass':
-        return 'type-grass badge-grass';
+        return 'type-grass';
       case 'electric':
-        return 'type-electric badge-electric';
+        return 'type-electric';
       case 'bug':
-        return 'type-bug badge-bug';
+        return 'type-bug';
       case 'poison':
-        return 'type-poison badge-poison';
+        return 'type-poison';
       case 'ground':
-        return 'type-ground badge-ground';
+        return 'type-ground';
       case 'psychic':
-        return 'type-psychic badge-psychic';
+        return 'type-psychic';
       case 'fairy':
-        return 'type-fairy badge-fairy';
+        return 'type-psychic';
       case 'fighting':
-        return 'type-fighting badge-fighting';
+        return 'type-fighting';
       case 'rock':
-        return 'type-rock badge-rock';
-      case 'ghost':
-        return 'type-ghost badge-ghost';
+        return 'type-ground';
       default:
-        return 'type-default badge-default';
+        return 'type-default';
     }
   };
 
@@ -94,7 +92,7 @@ const SearchGeneration = () => {
     if (selectedGeneration) {
       const generationId = parseInt(selectedGeneration);
       filtered = filtered.filter(pokemon =>
-        pokemon.speciesDetails.generation.url.split('/').slice(-2, -1)[0] == generationId
+        pokemon.speciesDetails.generation.url.split('/').slice(-2, -1)[0] === generationId
       );
     }
 
@@ -103,7 +101,7 @@ const SearchGeneration = () => {
 
   return (
     <div className='fixed top-[18vh] left-1/2 transform -translate-x-1/2 w-[80%]'>
-      <h1 className='text-center font-extrabold text-4xl mt-2'>Cerca Pokèmon</h1>
+      <h1 className='text-center font-extrabold text-4xl mt-2'>Cerca Pokémon</h1>
       <select
         value={selectedType}
         onChange={(e) => setSelectedType(e.target.value)}
@@ -136,7 +134,7 @@ const SearchGeneration = () => {
             filteredPokemon.map((pokemon, index) => (
               <div
                 key={index}
-                className={`text-center ${pokemon.types ? getTypeClass(pokemon.types[0].type.name) : 'type-default'} rounded-lg mt-4`}
+                className={`text-center ${pokemon.types ? getTypeClass(pokemon.types[0].type.name) : 'type-default badge-default'} rounded-lg mt-4`}
               >
                 <Link href={`/pokemon/${pokemon.id}`}>
                   <div className='flex flex-col items-center justify-center pb-4'>
