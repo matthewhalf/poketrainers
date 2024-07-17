@@ -4,7 +4,7 @@ import { Roms } from "@/data"
 
 const RomsGrid = () => {
   return (
-    <div className='fixed top-[13vh] left-1/2 transform -translate-x-1/2 w-[80%] pb-[20vh]'>
+    <div className='fixed top-[13vh] left-1/2 transform -translate-x-1/2 w-[80%] pb-[25vh]'>
         <h1 className='text-center text-slate-800 font-extrabold text-4xl mt-2'>Downloads</h1>
         <div className="grid grid-cols-2 gap-6 max-h-[65vh] overflow-y-auto">
       {Roms.map((rom, index) => (

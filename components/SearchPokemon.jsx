@@ -83,7 +83,7 @@ const SearchPokemon = () => {
         placeholder="Cerca Pokémon..."
         className='py-2 rounded-full text-center bg-[#eee] w-full mt-3'
       />
-      <div className='grid grid-cols-2 gap-4 justify-center items-center mt-6 max-h-[50vh] overflow-y-auto'>
+      <div className='grid grid-cols-2 gap-4 justify-center items-center mt-6 max-h-[48vh] overflow-y-auto'>
         {loading ? (
           <div className='loader absolute left-1/2 transform -translate-x-1/2 mt-8'></div>
         ) : (
