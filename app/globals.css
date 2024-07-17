@@ -3,69 +3,129 @@
 @tailwind utilities;
 
 .type-normal {
-  background: rgb(168,168,120);
-  background: linear-gradient(162deg, rgba(168,168,120,1) 51%, rgba(216,215,190,1) 100%); 
+    background: rgb(168,168,120);
     color: white;
   }
   
   .type-fire {
-    background: rgb(242,148,69);
-    background: linear-gradient(162deg, rgba(242,148,69,1) 51%, rgba(250,216,174,1) 100%); 
+    background: rgb(242,148,69);; 
     color: white;
   }
   
   .type-water {
-    background: rgb(72,106,227);
-    background: linear-gradient(159deg, rgba(72,106,227,1) 51%, rgba(130,173,247,1) 100%);   
+    background: rgb(72,106,227);   
     color: white;
   }
 
   .type-grass {
     background: rgb(72,208,176);
-    background: linear-gradient(162deg, rgba(72,208,176,1) 59%, rgba(158,241,216,1) 100%); 
     color: white;
   }
 
   .type-electric {
-    background: rgb(233,211,61);
-    background: linear-gradient(162deg, rgba(233,211,61,1) 59%, rgba(244,240,148,1) 100%); 
+    background: rgb(233,211,61); 
     color: white;
   }
 
   .type-bug {
     background: rgb(89,207,125);
-    background: linear-gradient(162deg, rgba(89,207,125,1) 59%, rgba(193,241,207,1) 100%); 
     color: white;
   }
 
   .type-poison {
     background: rgb(231,139,217);
-    background: linear-gradient(162deg, rgba(231,139,217,1) 59%, rgba(247,215,244,1) 100%); 
     color: white;
   }
 
   .type-ground {
-    background: rgb(255,237,0);
-    background: linear-gradient(162deg, rgba(255,237,0,1) 59%, rgba(251,255,116,1) 100%); 
+    background: #8d8732;
     color: white;
   }
   
   .type-psychic {
     background: rgb(255,100,238);
-    background: linear-gradient(162deg, rgba(255,100,238,1) 59%, rgba(255,200,251,1) 100%); 
     color: white;
   }
 
   .type-fighting {
-    background: rgb(255,123,56);
-    background: linear-gradient(162deg, rgba(255,123,56,1) 59%, rgba(255,205,168,1) 100%); 
+    background: rgb(255,123,56); 
     color: white;
   }
 
   .type-default {
     background: rgb(166,173,211);
-    background: linear-gradient(162deg, rgba(166,173,211,1) 59%, rgba(216,221,237,1) 100%); 
     color: white;
   }
-  /* Aggiungi altre classi CSS per gli altri tipi di Pokémon secondo necessità */
+  
+  /* badge pagina pokemon */
+  span.badge-fire {
+    background: #fdedd7 !important;
+    color:#f29445 !important ;
+  }
+
+  span.badge-grass {
+    background: #cef9eb !important;
+    color:#48d0b0 !important ;
+  }
+
+  span.badge-normal {
+    background: #eae9dd !important;
+    color:#abab7c !important ;
+  }
+
+  span.badge-water {
+    background: #dee5fb !important;
+    color:#6f93eb !important ;
+  }
+
+  span.badge-bug{
+    background: #dff9e6 !important;
+    color:#59cf7d !important ;
+  }
+
+  span.badge-poison {
+    background: #fcebfb !important;
+    color:#e78bd9 !important ;
+  }
+
+  span.badge-electric  {
+    background: #f9f9c8 !important;
+    color:#e9d33d !important ;
+  }
+
+  span.badge-ground {
+    background: #f1edd6 !important;
+    color:#bfb55c !important ;
+  }
+
+  span.badge-psychic {
+    background: #ffe7fd !important;
+    color:#ff64ee !important ;
+  }
+
+  span.badge-fighting {
+    background: #ffe8d4 !important;
+    color:#ff7b38 !important ;
+  }
+
+  span.badge-default {
+    background: #eaedf5 !important;
+    color:#a6add3 !important ;
+  }
+
+  
+
+  .loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
   

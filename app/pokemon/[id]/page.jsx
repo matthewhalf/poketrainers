@@ -3,6 +3,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import BottomNavbar from '@/components/BottomNavbar';
+import { FaArrowLeft } from "react-icons/fa";
+import Link from 'next/link';
 
 const Pokemon = ({ params }) => {
   const { id } = params;
@@ -13,33 +15,33 @@ const Pokemon = ({ params }) => {
   const getTypeClass = (type) => {
     switch (type) {
       case 'normal':
-        return 'type-normal';
+        return 'type-normal badge-normal';
       case 'fire':
-        return 'type-fire';
+        return 'type-fire badge-fire';
       case 'water':
-        return 'type-water';
+        return 'type-water badge-water';
       case 'grass':
-        return 'type-grass';
+        return 'type-grass badge-grass';
       case 'electric':
-        return 'type-electric';
+        return 'type-electric badge-electric';
       case 'bug':
-          return 'type-bug';
+          return 'type-bug badge-bug';
       case 'poison':
-          return 'type-poison';
+          return 'type-poison badge-poison';
       case 'ground':
-          return 'type-ground';
+          return 'type-ground badge-ground';
       case 'psychic':
-            return 'type-psychic';
+            return 'type-psychic badge-psychic';
       case 'fairy':
-            return 'type-psychic';
+            return 'type-psychic badge-psychic';
       case 'fighting':
-            return 'type-fighting';
+            return 'type-fighting badge-fighting';
       case 'rock':
-            return 'type-ground';
+            return 'type-ground badge-ground';
       case 'ghost':
-            return 'type-poison';     
+            return 'type-poison badge-poison';     
       default:
-        return 'type-default';
+        return 'type-default badge-default';
     }
   };
 
@@ -129,14 +131,14 @@ const Pokemon = ({ params }) => {
 
   return (
     <div className={`${getTypeClass(pokemon.types[0].type.name)} pt-4`}>
-        <span className='font-light text-xm px-8'> Return  </span>
+        <Link href="/"><FaArrowLeft size={20} className='ml-6 mt-4'/></Link>
         <div className='flex flex-col justify-between items-center'>
           <div className='flex justify-between gap-3 items-center pt-8'>
             <h1 className='text-3xl font-extrabold text-white capitalize'>{pokemon.name}</h1>
             <p># {pokemon.id}</p>
           </div>
 
-          <span className={`rounded-lg px-6 mt-2 border border-solid ${getTypeClass(pokemon.types[0].type.name)}`}>{pokemon.types.map(typeInfo => typeInfo.type.name).join(' - ')}</span>
+          <span className={`rounded-lg px-6 mt-2 border border-solid font-semibold ${getTypeClass(pokemon.types[0].type.name)}`}>{pokemon.types.map(typeInfo => typeInfo.type.name).join(' - ')}</span>
           
           <img src={pokemon.sprites.front_default} alt={pokemon.name} width={200}/>  
         </div>
@@ -159,17 +161,17 @@ const Pokemon = ({ params }) => {
         <h2 className='font-bold text-xl pt-8 pb-2'>Evoluzioni</h2>
           <ul className='flex gap-4 mt-2 mb-8'>
             {evolutionChain.map((evolution, index) => (
-              <li key={evolution.id}>
-                <p>{evolution.name}</p>
+              <li key={evolution.id} className='text-center overflow-hidden pr-4 border-r-2 text-sm'>
+                <p className='capitalize'>{evolution.name}</p>
                 <img 
                   src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evolution.id}.png`} 
                   alt={evolution.name}
                 />
                 {index > 0 && evolutionChain[index - 1].evolves_to.length > 0 && evolutionChain[index - 1].evolves_to[0].evolution_details.length > 0 && (
-                  <div>
+                  <div className='font-bold'>
                     <p>Lv: {evolutionChain[index - 1].evolves_to[0].evolution_details[0].min_level}</p>
                     {evolutionChain[index - 1].evolves_to[0].evolution_details[0].item && (
-                      <p>Oggetto necessario: {evolutionChain[index - 1].evolves_to[0].evolution_details[0].item.name}</p>
+                      <p>{evolutionChain[index - 1].evolves_to[0].evolution_details[0].item.name}</p>
                     )}
                     {evolutionChain[index - 1].evolves_to[0].evolution_details[0].trigger && evolutionChain[index - 1].evolves_to[0].evolution_details[0].trigger.name === 'trade' && (
                       <p>Si evolve tramite scambio</p>
