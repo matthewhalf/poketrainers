@@ -77,7 +77,7 @@ const SearchPokemon = () => {
 
   return (
     <div className='fixed top-[18vh] left-[10vw] w-[80%]'>
-      <h1 className='text-center font-extrabold text-4xl mt-2'>Pokedex</h1>
+      <h1 className='text-center text-slate-800 font-extrabold text-4xl mt-2'>Pokedex</h1>
       <input
         type="text"
         value={searchTerm}
@@ -85,7 +85,7 @@ const SearchPokemon = () => {
         placeholder="Cerca Pokémon..."
         className='py-2 rounded-full text-center bg-[#eee] w-full mt-3'
       />
-      <div className='grid grid-cols-2 gap-4 justify-center items-center mt-6 max-h-[60vh] overflow-y-auto'>
+      <div className='grid grid-cols-2 gap-4 justify-center items-center mt-6 max-h-[50vh] overflow-y-auto'>
         {filteredPokemon.length > 0 ? (
           filteredPokemon.map((pokemon, index) => (
             <div

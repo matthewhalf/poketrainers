@@ -3,7 +3,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import BottomNavbar from '@/components/BottomNavbar';
-import Header from '@/components/Header';
 
 const Pokemon = ({ params }) => {
   const { id } = params;
@@ -49,6 +48,7 @@ const Pokemon = ({ params }) => {
       // Effettua la chiamata API per ottenere i dettagli del Pokémon
       axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
         .then(response => {
+          console.log(response.data)
           setPokemon(response.data);
           return axios.get(response.data.species.url); // Ottiene l'URL della specie per ottenere la catena evolutiva
         })
@@ -58,7 +58,7 @@ const Pokemon = ({ params }) => {
         .then(response => {
           const evolutions = [];
           let currentEvolution = response.data.chain;
-          console.log(response.data.chain)
+        
 
           // Itera attraverso la catena evolutiva e raccoglie le informazioni sulle evoluzioni
           while (currentEvolution) {
@@ -128,32 +128,36 @@ const Pokemon = ({ params }) => {
   }, {});
 
   return (
-    <div>
-      <Header />
-      <div className='min-h-[65vh] flex flex-col justify-center items-center'>
-        <div className={`text-center ${getTypeClass(pokemon.types[0].type.name)} rounded-b-[50px] pt-[8em] pb-2 w-full flex flex-col justify-center items-center`}>
-          <h1 className='text-3xl font-extrabold text-white'>{pokemon.name}</h1>
-          <img src={pokemon.sprites.front_default} alt={pokemon.name} width={100}/>  
+    <div className={`${getTypeClass(pokemon.types[0].type.name)} pt-4`}>
+        <span className='font-light text-xm px-8'> Return  </span>
+        <div className='flex flex-col justify-between items-center'>
+          <div className='flex justify-between gap-3 items-center pt-8'>
+            <h1 className='text-3xl font-extrabold text-white capitalize'>{pokemon.name}</h1>
+            <p># {pokemon.id}</p>
+          </div>
+
+          <span className={`rounded-lg px-6 mt-2 border border-solid ${getTypeClass(pokemon.types[0].type.name)}`}>{pokemon.types.map(typeInfo => typeInfo.type.name).join(' - ')}</span>
+          
+          <img src={pokemon.sprites.front_default} alt={pokemon.name} width={200}/>  
         </div>
 
 
-       
-        <p>Height: {pokemon.height / 10} m</p>
-        <p>Weight: {pokemon.weight / 10} kg</p>
-        <p>Type: {pokemon.types.map(typeInfo => typeInfo.type.name).join(', ')}</p>
-        <h2>Statistics</h2>
-        <ul>
+        <div className='bg-white text-slate-800 pt-6 px-8 pb-[15vh] rounded-t-[50px] -mt-20'>
+          <h2 className='font-bold text-xl pt-8 pb-2'>Descrizione</h2>
+          <p><span className='text-slate-500 font-semibold mr-[3vw]'>Altezza:</span> {pokemon.height / 10} m</p>
+          <p><span className='text-slate-500 font-semibold mr-[3vw]'>Peso:</span>  {pokemon.weight / 10} kg</p>
+
+          <h2 className='font-bold text-xl pt-8 pb-2'>Statistiche</h2>
+          <ul>
           {pokemon.stats.map(stat => (
             <li key={stat.stat.name}>
-              {stat.stat.name}: {stat.base_stat}
+             <span className='text-slate-500 font-semibold mr-[3vw]'>{stat.stat.name}:</span>  {stat.base_stat}
             </li>
           ))}
         </ul>
-      </div>
-      
-      <div className='bg-blue-300 p-10 w-fit'>
-          <h2>Evolutions</h2>
-          <ul className='flex gap-4'>
+          
+        <h2 className='font-bold text-xl pt-8 pb-2'>Evoluzioni</h2>
+          <ul className='flex gap-4 mt-2 mb-8'>
             {evolutionChain.map((evolution, index) => (
               <li key={evolution.id}>
                 <p>{evolution.name}</p>
@@ -175,23 +179,27 @@ const Pokemon = ({ params }) => {
               </li>
             ))}
           </ul>
-      </div>
 
+        <h2 className='font-bold text-xl pt-8 pb-2'>Mosse che impara</h2>
+        <ul>
+        {Object.keys(movesWithVersions).map(moveName => (
+          <li key={moveName}>
+            <span className='bg-slate-100 px-6 rounded-lg text-slate-600 border-solid border-2 border-slate-200 font-bold'>{moveName}</span>
+            <div className='my-6'>
+              <ul>
+                {movesWithVersions[moveName].map((v, index) => (
+                  <li key={index}>
+                   <span className='capitalize font-bold'>{v.version}:</span>  ( Livello: {v.level})
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+        ))}
+      </ul>
 
       
-      <div className='bg-red-900 p-10 w-fit'>
-        <h2>Mosse che può imparare</h2>
-        <ul>
-          {Object.keys(movesWithVersions).map(moveName => (
-            <li key={moveName} className='bg-slate-800 border border-solid border-black-200'>
-              {moveName}
-              <div>
-                <p>Versions: {movesWithVersions[moveName].map(v => `${v.version} (Level ${v.level})`).join(', ')}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      </div>    
       <BottomNavbar />
     </div>
   );

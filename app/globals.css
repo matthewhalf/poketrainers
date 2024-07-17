@@ -3,57 +3,68 @@
 @tailwind utilities;
 
 .type-normal {
-    background-color: #A8A878;
+  background: rgb(168,168,120);
+  background: linear-gradient(162deg, rgba(168,168,120,1) 51%, rgba(216,215,190,1) 100%); 
     color: white;
   }
   
   .type-fire {
-    background-color: #F08030;
+    background: rgb(242,148,69);
+    background: linear-gradient(162deg, rgba(242,148,69,1) 51%, rgba(250,216,174,1) 100%); 
     color: white;
   }
   
   .type-water {
-    background-color: #6890F0;
+    background: rgb(72,106,227);
+    background: linear-gradient(159deg, rgba(72,106,227,1) 51%, rgba(130,173,247,1) 100%);   
     color: white;
   }
 
   .type-grass {
-    background-color: #5CB387;
+    background: rgb(72,208,176);
+    background: linear-gradient(162deg, rgba(72,208,176,1) 59%, rgba(158,241,216,1) 100%); 
     color: white;
   }
 
   .type-electric {
-    background-color: #e9d33d;
+    background: rgb(233,211,61);
+    background: linear-gradient(162deg, rgba(233,211,61,1) 59%, rgba(244,240,148,1) 100%); 
     color: white;
   }
 
   .type-bug {
-    background-color: #1e5d32;
+    background: rgb(89,207,125);
+    background: linear-gradient(162deg, rgba(89,207,125,1) 59%, rgba(193,241,207,1) 100%); 
     color: white;
   }
 
   .type-poison {
-    background-color: #7e2a6c;
+    background: rgb(231,139,217);
+    background: linear-gradient(162deg, rgba(231,139,217,1) 59%, rgba(247,215,244,1) 100%); 
     color: white;
   }
 
   .type-ground {
-    background-color: #804000;
+    background: rgb(255,237,0);
+    background: linear-gradient(162deg, rgba(255,237,0,1) 59%, rgba(251,255,116,1) 100%); 
     color: white;
   }
   
   .type-psychic {
-    background-color: #c704b9;
+    background: rgb(255,100,238);
+    background: linear-gradient(162deg, rgba(255,100,238,1) 59%, rgba(255,200,251,1) 100%); 
     color: white;
   }
 
   .type-fighting {
-    background-color: #ef3c07;
+    background: rgb(255,123,56);
+    background: linear-gradient(162deg, rgba(255,123,56,1) 59%, rgba(255,205,168,1) 100%); 
     color: white;
   }
 
   .type-default {
-    background-color: #66659d;
+    background: rgb(166,173,211);
+    background: linear-gradient(162deg, rgba(166,173,211,1) 59%, rgba(216,221,237,1) 100%); 
     color: white;
   }
   /* Aggiungi altre classi CSS per gli altri tipi di Pokémon secondo necessità */
