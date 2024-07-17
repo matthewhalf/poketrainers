@@ -32,7 +32,7 @@ const SearchPokemon = () => {
       const pokemon = response.data;
       return {
         id: pokemon.id,
-        name: pokemon.name,
+        name: pokemon.name || 'Unknown',
         types: pokemon.types?.map(t => t.type.name) || [],
         sprite: pokemon.sprites?.front_default || ''
       };
@@ -50,8 +50,9 @@ const SearchPokemon = () => {
         const detailedPokemon = await Promise.all(
           results.map(pokemon => fetchPokemonDetails(pokemon.url))
         );
-        setPokemonList(detailedPokemon.filter(Boolean));
-        setFilteredPokemon(detailedPokemon.filter(Boolean));
+        const validPokemon = detailedPokemon.filter(p => p && p.name && p.id);
+        setPokemonList(validPokemon);
+        setFilteredPokemon(validPokemon);
         setLoading(false);
       } catch (error) {
         console.error("There was an error fetching the Pokémon list!", error);
@@ -88,25 +89,23 @@ const SearchPokemon = () => {
         ) : (
           filteredPokemon.length > 0 ? (
             filteredPokemon.map((pokemon, index) => (
-              pokemon && (
-                <div
-                  key={index}
-                  className={`text-center ${pokemon.types[0] ? getTypeClass(pokemon.types[0]) : 'type-default'} rounded-lg mt-4`}
-                >
-                  <Link href={`/pokemon/${pokemon.id}`}>
-                    <div className='flex flex-col items-center justify-center pb-4'>
-                      {pokemon.sprite && (
-                        <img
-                          src={pokemon.sprite}
-                          alt={pokemon.name}
-                          width={100}
-                        />
-                      )}
-                      <p className='text-white font-semibold capitalize'>{pokemon.name}</p>
-                    </div>
-                  </Link>
-                </div>
-              )
+              <div
+                key={index}
+                className={`text-center ${pokemon.types[0] ? getTypeClass(pokemon.types[0]) : 'type-default'} rounded-lg mt-4`}
+              >
+                <Link href={`/pokemon/${pokemon.id}`}>
+                  <div className='flex flex-col items-center justify-center pb-4'>
+                    {pokemon.sprite && (
+                      <img
+                        src={pokemon.sprite}
+                        alt={pokemon.name}
+                        width={100}
+                      />
+                    )}
+                    <p className='text-white font-semibold capitalize'>{pokemon.name}</p>
+                  </div>
+                </Link>
+              </div>
             ))
           ) : (
             <p className='text-center text-gray-500 mt-4 absolute left-1/2 transform -translate-x-1/2'>Nessun Pokémon trovato.</p>
