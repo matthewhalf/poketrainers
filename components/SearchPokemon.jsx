@@ -7,8 +7,6 @@ const SearchPokemon = () => {
   const [pokemonList, setPokemonList] = useState([]);
   const [filteredPokemon, setFilteredPokemon] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const pokemonPerPage = 20;
 
   const getTypeClass = (type) => {
     const typeClasses = {
@@ -49,7 +47,11 @@ const SearchPokemon = () => {
       try {
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=800`);
         const results = response.data.results;
-        setPokemonList(results);
+        const detailedPokemon = await Promise.all(
+          results.map(pokemon => fetchPokemonDetails(pokemon.url))
+        );
+        setPokemonList(detailedPokemon.filter(Boolean));
+        setFilteredPokemon(detailedPokemon.filter(Boolean));
         setLoading(false);
       } catch (error) {
         console.error("There was an error fetching the Pokémon list!", error);
@@ -58,34 +60,17 @@ const SearchPokemon = () => {
     };
 
     fetchPokemon();
-  }, []);
+  }, [fetchPokemonDetails]);
 
   useEffect(() => {
-    const filterAndLoadPokemon = async () => {
-      setLoading(true);
-      let filtered = pokemonList;
-
-      if (searchTerm) {
-        filtered = filtered.filter(pokemon => 
-          pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      }
-
-      const paginatedPokemon = filtered.slice(0, page * pokemonPerPage);
-      const detailedPokemon = await Promise.all(
-        paginatedPokemon.map(pokemon => fetchPokemonDetails(pokemon.url))
-      );
-
-      setFilteredPokemon(detailedPokemon.filter(Boolean));
-      setLoading(false);
-    };
-
-    filterAndLoadPokemon();
-  }, [searchTerm, pokemonList, page, fetchPokemonDetails]);
-
-  const loadMore = () => {
-    setPage(prevPage => prevPage + 1);
-  };
+    if (searchTerm) {
+      setFilteredPokemon(pokemonList.filter(pokemon =>
+        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+      ));
+    } else {
+      setFilteredPokemon(pokemonList);
+    }
+  }, [searchTerm, pokemonList]);
 
   return (
     <div className='fixed top-[13vh] left-1/2 transform -translate-x-1/2 w-[80%]'>
@@ -128,11 +113,6 @@ const SearchPokemon = () => {
           )
         )}
       </div>
-      {filteredPokemon.length > 0 && filteredPokemon.length % pokemonPerPage === 0 && (
-        <button onClick={loadMore} className='mt-4 bg-blue-500 text-white p-2 rounded'>
-          Carica altri
-        </button>
-      )}
     </div>
   );
 };
