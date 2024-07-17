@@ -131,18 +131,16 @@ const SearchGeneration = () => {
             filteredPokemon.map((pokemon, index) => (
               <div
                 key={index}
-                className={`text-center ${pokemon.types ? getTypeClass(pokemon.types[0].type.name) : 'type-default'} rounded-lg mt-4`}
+                className={`text-center ${pokemon.types && pokemon.types[0] ? getTypeClass(pokemon.types[0].type.name) : 'type-default'} rounded-lg mt-4`}
               >
                 <Link href={`/pokemon/${pokemon.id}`}>
                   <div className='flex flex-col items-center justify-center pb-4'>
-                    {pokemon.sprites && pokemon.sprites.front_default ? (
+                    {pokemon.sprites && pokemon.sprites.front_default && (
                       <img
                         src={pokemon.sprites.front_default}
                         alt={pokemon.name}
                         width={100}
                       />
-                    ) : (
-                      <p>No image available</p>
                     )}
                     <p className='text-white font-semibold capitalize'>{pokemon.name}</p>
                   </div>
@@ -150,7 +148,7 @@ const SearchGeneration = () => {
               </div>
             ))
           ) : (
-            <p className='text-center text-gray-500 mt-4 absolute left-[12vw]'>Nessun Pokémon trovato.</p>
+            <p className='text-center text-gray-500 mt-4 absolute left-1/2 transform -translate-x-1/2'>Nessun Pokémon trovato.</p>
           )
         )}
       </div>
