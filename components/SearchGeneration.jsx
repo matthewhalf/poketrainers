@@ -32,7 +32,7 @@ const SearchGeneration = () => {
       case 'psychic':
         return 'type-psychic';
       case 'fairy':
-        return 'type-psychic';
+        return 'type-psychic'; // Fix this line to 'type-fairy'
       case 'fighting':
         return 'type-fighting';
       case 'rock':
@@ -45,51 +45,56 @@ const SearchGeneration = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=800');
-        const results = response.data.results;
-        const detailedPokemonList = await Promise.all(
-          results.map(async (pokemon) => {
-            const pokeDetails = await axios.get(pokemon.url).then(res => res.data);
-            const speciesDetails = await axios.get(pokeDetails.species.url).then(res => res.data);
-            return { ...pokeDetails, speciesDetails };
-          })
-        );
-        setPokemonList(detailedPokemonList);
+        // Fetching Pokemon data
+        const pokemonResponse = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=800');
+        const pokemonData = pokemonResponse.data.results;
 
-        const typeResponse = await axios.get('https://pokeapi.co/api/v2/type');
-        setTypes(typeResponse.data.results);
+        // Fetching types data
+        const typesResponse = await axios.get('https://pokeapi.co/api/v2/type');
+        const typesData = typesResponse.data.results;
 
-        const generationResponse = await axios.get('https://pokeapi.co/api/v2/generation');
-        setGenerations(generationResponse.data.results);
+        // Fetching generations data
+        const generationsResponse = await axios.get('https://pokeapi.co/api/v2/generation');
+        const generationsData = generationsResponse.data.results;
 
-        setLoading(false);
+        // Updating state with fetched data
+        setPokemonList(pokemonData);
+        setTypes(typesData);
+        setGenerations(generationsData);
+
+        setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
         console.error("There was an error fetching the Pokémon data!", error);
         setLoading(false); // Stop loading if there's an error
       }
     };
 
-    fetchData();
-  }, []);
+    fetchData(); // Call fetchData function on component mount
+  }, []); // Empty dependency array to run effect only once
 
   useEffect(() => {
-    let filtered = pokemonList;
+    // Function to filter pokemon based on selected type and generation
+    const filterPokemon = () => {
+      let filtered = pokemonList;
 
-    if (selectedType) {
-      filtered = filtered.filter(pokemon =>
-        pokemon.types && pokemon.types.some(type => type.type.name === selectedType)
-      );
-    }
+      if (selectedType) {
+        filtered = filtered.filter(pokemon =>
+          pokemon.types && pokemon.types.some(type => type.type.name === selectedType)
+        );
+      }
 
-    if (selectedGeneration) {
-      const generationId = parseInt(selectedGeneration);
-      filtered = filtered.filter(pokemon =>
-        pokemon.speciesDetails.generation.url.split('/').slice(-2, -1)[0] === generationId
-      );
-    }
+      if (selectedGeneration) {
+        const generationId = parseInt(selectedGeneration);
+        filtered = filtered.filter(pokemon =>
+          pokemon.generation && parseInt(pokemon.generation.url.split('/').slice(-2, -1)[0]) === generationId
+        );
+      }
 
-    setFilteredPokemon(filtered);
-  }, [selectedType, selectedGeneration, pokemonList]);
+      setFilteredPokemon(filtered); // Update filteredPokemon state
+    };
+
+    filterPokemon(); // Call filterPokemon function whenever selectedType or selectedGeneration changes
+  }, [selectedType, selectedGeneration, pokemonList]); // Dependency array with selectedType, selectedGeneration, and pokemonList
 
   return (
     <div className='fixed top-[18vh] left-1/2 transform -translate-x-1/2 w-[80%]'>
@@ -126,7 +131,7 @@ const SearchGeneration = () => {
             filteredPokemon.map((pokemon, index) => (
               <div
                 key={index}
-                className={`text-center ${pokemon.types ? getTypeClass(pokemon.types[0].type.name) : 'type-default badge-default'} rounded-lg mt-4`}
+                className={`text-center ${pokemon.types ? getTypeClass(pokemon.types[0].type.name) : 'type-default'} rounded-lg mt-4`}
               >
                 <Link href={`/pokemon/${pokemon.id}`}>
                   <div className='flex flex-col items-center justify-center pb-4'>
