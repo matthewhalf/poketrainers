@@ -11,7 +11,7 @@ const SearchGeneration = () => {
   const [generations, setGenerations] = useState([]);
   const [selectedType, setSelectedType] = useState('');
   const [selectedGeneration, setSelectedGeneration] = useState('');
-  const [loading, setLoading] = useState(true); // Stato per il caricamento
+  const [loading, setLoading] = useState(true);
 
   const getTypeClass = (type) => {
     switch (type) {
@@ -26,21 +26,21 @@ const SearchGeneration = () => {
       case 'electric':
         return 'type-electric badge-electric';
       case 'bug':
-          return 'type-bug badge-bug';
+        return 'type-bug badge-bug';
       case 'poison':
-          return 'type-poison badge-poison';
+        return 'type-poison badge-poison';
       case 'ground':
-          return 'type-ground badge-ground';
+        return 'type-ground badge-ground';
       case 'psychic':
-            return 'type-psychic badge-psychic';
+        return 'type-psychic badge-psychic';
       case 'fairy':
-            return 'type-psychic badge-psychic';
+        return 'type-fairy badge-fairy';
       case 'fighting':
-            return 'type-fighting badge-fighting';
+        return 'type-fighting badge-fighting';
       case 'rock':
-            return 'type-ground badge-ground';
+        return 'type-rock badge-rock';
       case 'ghost':
-            return 'type-poison badge-poison';     
+        return 'type-ghost badge-ghost';
       default:
         return 'type-default badge-default';
     }
@@ -49,7 +49,6 @@ const SearchGeneration = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Carica la lista dei Pokémon al caricamento della pagina
         const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=800');
         const results = response.data.results;
         const detailedPokemonList = await Promise.all(
@@ -61,17 +60,16 @@ const SearchGeneration = () => {
         );
         setPokemonList(detailedPokemonList);
 
-        // Carica i tipi di Pokémon
         const typeResponse = await axios.get('https://pokeapi.co/api/v2/type');
         setTypes(typeResponse.data.results);
 
-        // Carica le generazioni di Pokémon
         const generationResponse = await axios.get('https://pokeapi.co/api/v2/generation');
         setGenerations(generationResponse.data.results);
 
-        setLoading(false); // Fine del caricamento
+        setLoading(false);
       } catch (error) {
         console.error("There was an error fetching the Pokémon data!", error);
+        setLoading(false); // Stop loading if there's an error
       }
     };
 
@@ -131,7 +129,7 @@ const SearchGeneration = () => {
         ))}
       </select>
       <div className='grid grid-cols-2 gap-4 justify-center items-center mt-6 max-h-[40vh] overflow-y-auto'>
-        {loading ? ( // Mostra il loader se il caricamento è in corso
+        {loading ? (
           <div className='loader absolute left-1/2 transform -translate-x-1/2 mt-8'></div>
         ) : (
           filteredPokemon.length > 0 ? (
@@ -149,7 +147,7 @@ const SearchGeneration = () => {
                         width={100}
                       />
                     ) : (
-                      <p>No image available</p> // Messaggio di fallback nel caso non ci sia un'immagine disponibile
+                      <p>No image available</p>
                     )}
                     <p className='text-white font-semibold capitalize'>{pokemon.name}</p>
                   </div>
