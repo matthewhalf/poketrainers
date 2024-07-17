@@ -42,59 +42,70 @@ const SearchGeneration = () => {
     }
   };
 
+  const getGeneration = async (pokemonId) => {
+    try {
+      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`);
+      return response.data.generation.name;
+    } catch (error) {
+      console.error("Error fetching generation:", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetching Pokemon data
-        const pokemonResponse = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=800');
+        const pokemonResponse = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
         const pokemonData = pokemonResponse.data.results;
 
-        // Fetching types data
         const typesResponse = await axios.get('https://pokeapi.co/api/v2/type');
         const typesData = typesResponse.data.results;
 
-        // Fetching generations data
         const generationsResponse = await axios.get('https://pokeapi.co/api/v2/generation');
         const generationsData = generationsResponse.data.results;
 
-        // Updating state with fetched data
-        setPokemonList(pokemonData);
+        const detailedPokemonData = await Promise.all(
+          pokemonData.map(async (pokemon) => {
+            const detailResponse = await axios.get(pokemon.url);
+            return {
+              ...detailResponse.data,
+              types: detailResponse.data.types.map(t => t.type.name),
+              generation: await getGeneration(detailResponse.data.id)
+            };
+          })
+        );
+
+        setPokemonList(detailedPokemonData);
+        setFilteredPokemon(detailedPokemonData);
         setTypes(typesData);
         setGenerations(generationsData);
-
-        setLoading(false); // Set loading to false after data is fetched
+        setLoading(false);
       } catch (error) {
         console.error("There was an error fetching the Pokémon data!", error);
-        setLoading(false); // Stop loading if there's an error
+        setLoading(false);
       }
     };
 
-    fetchData(); // Call fetchData function on component mount
-  }, []); // Empty dependency array to run effect only once
+    fetchData();
+  }, []);
 
   useEffect(() => {
-    // Function to filter pokemon based on selected type and generation
     const filterPokemon = () => {
       let filtered = pokemonList;
 
       if (selectedType) {
-        filtered = filtered.filter(pokemon =>
-          pokemon.types && pokemon.types.some(type => type.type.name === selectedType)
-        );
+        filtered = filtered.filter(pokemon => pokemon.types.includes(selectedType));
       }
 
       if (selectedGeneration) {
-        const generationId = parseInt(selectedGeneration);
-        filtered = filtered.filter(pokemon =>
-          pokemon.generation && parseInt(pokemon.generation.url.split('/').slice(-2, -1)[0]) === generationId
-        );
+        filtered = filtered.filter(pokemon => pokemon.generation === selectedGeneration);
       }
 
-      setFilteredPokemon(filtered); // Update filteredPokemon state
+      setFilteredPokemon(filtered);
     };
 
-    filterPokemon(); // Call filterPokemon function whenever selectedType or selectedGeneration changes
-  }, [selectedType, selectedGeneration, pokemonList]); // Dependency array with selectedType, selectedGeneration, and pokemonList
+    filterPokemon();
+  }, [selectedType, selectedGeneration, pokemonList]);
 
   const handleTypeChange = (e) => {
     setSelectedType(e.target.value);
@@ -105,7 +116,7 @@ const SearchGeneration = () => {
   };
 
   return (
-    <div className='fixed top-[18vh] left-1/2 transform -translate-x-1/2 w-[80%]'>
+    <div className='fixed top-[13vh] left-1/2 transform -translate-x-1/2 w-[80%]'>
       <h1 className='text-center font-extrabold text-4xl mt-2'>Cerca Pokémon</h1>
       <select
         value={selectedType}
@@ -126,7 +137,7 @@ const SearchGeneration = () => {
       >
         <option value="">Seleziona generazione</option>
         {generations.map((generation, index) => (
-          <option key={index} value={generation.url.split('/')[generation.url.split('/').length - 2]}>
+          <option key={index} value={generation.name}>
             {generation.name}
           </option>
         ))}
@@ -139,7 +150,7 @@ const SearchGeneration = () => {
             filteredPokemon.map((pokemon, index) => (
               <div
                 key={index}
-                className={`text-center ${pokemon.types && pokemon.types[0] ? getTypeClass(pokemon.types[0].type.name) : 'type-default'} rounded-lg mt-4`}
+                className={`text-center ${pokemon.types[0] ? getTypeClass(pokemon.types[0]) : 'type-default'} rounded-lg mt-4`}
               >
                 <Link href={`/pokemon/${pokemon.id}`}>
                   <div className='flex flex-col items-center justify-center pb-4'>
