@@ -32,7 +32,7 @@ const SearchGeneration = () => {
       case 'psychic':
         return 'type-psychic';
       case 'fairy':
-        return 'type-psychic'; // Fix this line to 'type-fairy'
+        return 'type-psychic';
       case 'fighting':
         return 'type-fighting';
       case 'rock':
@@ -96,12 +96,20 @@ const SearchGeneration = () => {
     filterPokemon(); // Call filterPokemon function whenever selectedType or selectedGeneration changes
   }, [selectedType, selectedGeneration, pokemonList]); // Dependency array with selectedType, selectedGeneration, and pokemonList
 
+  const handleTypeChange = (e) => {
+    setSelectedType(e.target.value);
+  };
+
+  const handleGenerationChange = (e) => {
+    setSelectedGeneration(e.target.value);
+  };
+
   return (
     <div className='fixed top-[18vh] left-1/2 transform -translate-x-1/2 w-[80%]'>
       <h1 className='text-center font-extrabold text-4xl mt-2'>Cerca Pokémon</h1>
       <select
         value={selectedType}
-        onChange={(e) => setSelectedType(e.target.value)}
+        onChange={handleTypeChange}
         className='py-2 rounded-full text-center bg-[#eee] w-full mt-3'
       >
         <option value="">Seleziona il tipo</option>
@@ -113,7 +121,7 @@ const SearchGeneration = () => {
       </select>
       <select
         value={selectedGeneration}
-        onChange={(e) => setSelectedGeneration(e.target.value)}
+        onChange={handleGenerationChange}
         className='py-2 rounded-full text-center bg-[#eee] w-full mt-3'
       >
         <option value="">Seleziona generazione</option>
