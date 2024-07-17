@@ -55,7 +55,7 @@ const SearchGeneration = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const pokemonResponse = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
+        const pokemonResponse = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=800');
         const pokemonData = pokemonResponse.data.results;
 
         const typesResponse = await axios.get('https://pokeapi.co/api/v2/type');
