@@ -103,14 +103,7 @@ const SearchGeneration = () => {
 
   return (
     <div className='fixed top-[18vh] left-1/2 transform -translate-x-1/2 w-[80%]'>
-      <h1 className='text-center font-extrabold text-4xl mt-2'>Cerca Pokémon</h1>
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Cerca per nome..."
-        className='py-2 rounded-full text-center bg-[#eee] w-full mt-3'
-      />
+      <h1 className='text-center font-extrabold text-4xl mt-2'>Cerca Pokèmon</h1>
       <select
         value={selectedType}
         onChange={(e) => setSelectedType(e.target.value)}
