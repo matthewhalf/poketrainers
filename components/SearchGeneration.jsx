@@ -1,10 +1,8 @@
-"use client";
 import axios from 'axios';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const SearchGeneration = () => {
-  const [searchTerm, setSearchTerm] = useState('');
   const [pokemonList, setPokemonList] = useState([]);
   const [filteredPokemon, setFilteredPokemon] = useState([]);
   const [types, setTypes] = useState([]);
@@ -77,12 +75,6 @@ const SearchGeneration = () => {
   useEffect(() => {
     let filtered = pokemonList;
 
-    if (searchTerm) {
-      filtered = filtered.filter(pokemon =>
-        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
     if (selectedType) {
       filtered = filtered.filter(pokemon =>
         pokemon.types && pokemon.types.some(type => type.type.name === selectedType)
@@ -97,7 +89,7 @@ const SearchGeneration = () => {
     }
 
     setFilteredPokemon(filtered);
-  }, [searchTerm, selectedType, selectedGeneration, pokemonList]);
+  }, [selectedType, selectedGeneration, pokemonList]);
 
   return (
     <div className='fixed top-[18vh] left-1/2 transform -translate-x-1/2 w-[80%]'>
