@@ -11,7 +11,8 @@ const Pokemon = ({ params }) => {
   const [pokemon, setPokemon] = useState(null);
   const [evolutionChain, setEvolutionChain] = useState([]);
   const [movesInItalian, setMovesInItalian] = useState([]);
-
+  const [locations, setLocations] = useState([]);
+ 
   const getTypeClass = (type) => {
     switch (type) {
       case 'normal':
@@ -50,7 +51,6 @@ const Pokemon = ({ params }) => {
       // Effettua la chiamata API per ottenere i dettagli del Pokémon
       axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
         .then(response => {
-          console.log(response.data)
           setPokemon(response.data);
           return axios.get(response.data.species.url); // Ottiene l'URL della specie per ottenere la catena evolutiva
         })
@@ -110,6 +110,23 @@ const Pokemon = ({ params }) => {
       Promise.all(movePromises).then(results => setMovesInItalian(results));
     }
   }, [pokemon]);
+
+  useEffect(() => {
+    if (id) {
+      // Effettua la chiamata API per ottenere le encounter locations
+      axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/encounters`)
+        .then(response => {
+          const encounterLocations = response.data.map(encounter => ({
+            location: encounter.location_area.name
+          }));
+          setLocations(encounterLocations);
+          console.log(encounterLocations);
+        })
+        .catch(error => {
+          console.error("C'è stato un errore nel recupero delle location di incontro!", error);
+        });
+    }
+  }, [id]);
 
   if (!pokemon) return <div>Caricamento...</div>;
 
@@ -178,6 +195,15 @@ const Pokemon = ({ params }) => {
                     )}
                   </div>
                 )}
+              </li>
+            ))}
+          </ul>
+
+          <h2 className='font-bold text-xl pt-8 pb-2'>Dove si trova</h2>
+          <ul>
+            {locations.map((location, index) => (
+              <li key={index}>
+                <p className='font-semibold text-slate-500 py-2'>{location.location}</p>
               </li>
             ))}
           </ul>
