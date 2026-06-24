@@ -1,23 +1,28 @@
-import { Poppins } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
- 
-// If loading a variable font, you don't need to specify the font weight
-const poppins= Poppins({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-})
 
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata = {
-  title: "Pokè Trainers",
-  description: "Web app for real PokèTrainers",
+  title: "Poke Trainers - Pokémon Champions Companion & ROMs",
+  description: "La tua guida per il competitivo di Pokémon Champions: analisi meta, squadre consigliate, box builder avanzato e download ROM storiche.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="it">
-      <body className={poppins.className}>{children}</body>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }
