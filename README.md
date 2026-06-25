@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Poketrainers Champions - VGC Meta Browser
 
-## Getting Started
+Una web app minimalista, premium e funzionale progettata per aiutare i giocatori che hanno appena iniziato a navigare il formato competitivo **Pokémon Champions VGC**.
 
-First, run the development server:
+L'applicazione integra i dati di utilizzo competitivo in tempo reale estratti da **Pikalytics** con l'enciclopedia statica di **PokeAPI v2**, offrendo una panoramica pulita e spiegazioni intuitive per i principianti.
 
+---
+
+## 🌟 Caratteristiche Principali
+
+- **Metagame Dashboard**:
+  - Classifica in tempo reale dei **Top 50 Pokémon** più usati nel formato Regulation Set M-B.
+  - Ricerca istantanea e filtri per trovare rapidamente qualsiasi Pokémon.
+  - Indicazione colorata del Winrate e del record (Vittorie/Sconfitte/Pareggi) per valutare l'efficacia reale delle scelte.
+
+- **Sinergie e Core**:
+  - Tab per visualizzare le **Core più comuni** composte da 2, 3 o 4 Pokémon usati insieme in tornei reali.
+  - Spiegazione intuitiva dell'importanza delle Core per imparare ad assemblare team sinergici.
+
+- **Schede Pokémon Dettagliate**:
+  - **Identikit**: Artwork ufficiale, tipi e descrizione descrittiva (da PokeAPI).
+  - **Statistiche Base**: Indicatori visivi delle statistiche di ciascun Pokémon con barra di progresso.
+  - **Mosse, Strumenti e Abilità**: Elenco delle scelte più popolari con percentuali di utilizzo reali e **tooltips descrittivi a comparsa** (dati e descrizioni degli effetti recuperati direttamente da PokeAPI).
+  - **Nature & EV Spreads**: Le distribuzioni EV di Pikalytics vengono automaticamente convertite nel formato standard di **Pokémon Showdown** (es. `252 Atk / 252 Spe / 4 HP`) per semplificare la comprensione ai principianti.
+  - **Team d'Esempio Reali**: Visualizzazione delle squadre usate dai migliori giocatori nei tornei, con la composizione dei 6 Pokémon e i set esatti di mosse, strumento e abilità per il Pokémon selezionato.
+
+- **Guida per Principianti**:
+  - Pannello educativo integrato nella Dashboard che spiega come interpretare le statistiche, cos'è il metagame e come scegliere il primo team.
+
+---
+
+## 🛠️ Tecnologie Utilizzate
+
+- **Next.js 16** (con App Router & React Server Components).
+- **CSS3 Vanilla** per un design completamente personalizzato (vetromorfismo, layout responsive e animazioni fluide).
+- **PokeAPI v2** per immagini, descrizioni ed enciclopedia di mosse/strumenti/abilità (con caching integrato lato server per 24 ore).
+- **Pikalytics Scraping** tramite chiamate ai relativi endpoint e parsing strutturato della pagina HTML/Markdown.
+- **Lucide React** per le icone.
+
+---
+
+## 🚀 Come Iniziare
+
+### 1. Installa le dipendenze
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Avvia il server di sviluppo
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3. Visualizza l'applicazione
+Apri [http://localhost:3000](http://localhost:3000) sul tuo browser.
