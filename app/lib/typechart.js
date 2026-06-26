@@ -192,5 +192,7 @@ function getTypeEffectiveness(types) {
 }
 
 module.exports = {
-  getTypeEffectiveness
+  getTypeEffectiveness,
+  typeChart,
+  allTypes
 };

@@ -30,6 +30,7 @@ export default function RootLayout({ children }) {
             </a>
             <nav className="nav-links">
               <a href="/" className="nav-item">Dashboard</a>
+              <a href="/types" className="nav-item">Tabella Tipi</a>
             </nav>
           </div>
         </header>
